@@ -1,10 +1,24 @@
-# AirBnB_clone
+# AirBnB_clone - The Console
+## Description
 AirBnB is a web application used to view possible areas of vacation, book for and pay a room.
-In this project, we intend to clone an aleady existing web application for the purpose of 
-practical learning
-# Command Intepreter
-The command interpreter will be our console. We will use it to create accounts, save, update and delete accounts
-# How to start it:
-In a shell, type ./console.py to start the interpreter
-# How to use it
+The console will deal with the backend part of the code, primarily helping to:
+- create your data model
+- manage (create, update, destroy, etc) objects via a console / command interpreter
+- store and persist objects to a file (JSON file)
+
+## Installation
+clone this repository with code:
+' git clone https://yourpassword@github.com/benyas1getachew/AirBnB_clone '
+
+## Usage
+1. Change into AirBnB_clone dir
+' cd AirBnB_clone '
+2. Type ' ./console.py ' or 'python3 console.py' to use the console program
+
+In the console, the below commands are available
+### Commands
+** Creating a model class **
+' create ModelClass name '
+
+** 
 

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" A console Module
+""" This module starts up the console of our project
+
+    The console will be used to create and modify models and manipulate storage
 """
 import cmd
 from models.base_model import BaseModel
@@ -7,7 +9,7 @@ from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """ console class
+    """ Console class that inherits from cmd module
     """
     prompt = "(hbnb) "
 
@@ -113,6 +115,41 @@ class HBNBCommand(cmd.Cmd):
             obj = obj_class(**dict_objs[key])
             list_str_repr.append(obj.__str__())
         print(list_str_repr)
+
+    def do_update(self, args):
+        """ Updates an instance based on class name and id by adding or
+        updating attribute
+        """
+        if len(args) == 0:
+            print("** class name is missing **")
+            return
+        arg_list = args.split()
+        if arg_list[0] in globals():
+            obj_class = globals()[arg_list[0]]
+        else:
+            print("** class doesn't exist **")
+            return
+        if len(arg_list) < 2:
+            print("** instance id missing **")
+            return
+        all_obj = storage.all()
+        key = arg_list[0] + "." + arg_list[1]
+        if key not in all_obj.keys():
+            print("** no instance found **")
+            return
+        if len(arg_list) < 3:
+            print("** attribute name missing **")
+            return
+        else:
+            attr_name = arg_list[2]
+        if len(arg_list) < 4:
+            print("** value missing **")
+            return
+        else:
+            attr_value = arg_list[3]
+        all_obj[key][attr_name] = attr_value
+        obj = obj_class(**all_obj[key])
+        obj.save()
 
 
 if __name__ == "__main__":
