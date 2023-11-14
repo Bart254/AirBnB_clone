@@ -39,13 +39,13 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
             print(obj.id)
         else:
-            print("** class doesnt exist **")
+            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """ Prints string representation of an instance
         """
         if len(arg) == 0:
-            print("** class name is missing **")
+            print("** class name missing **")
         else:
             arg_list = arg.split()
             if arg_list[0] in globals():
@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
         """ Deletes an instance based on class name and id
         """
         if len(arg) == 0:
-            print("** class name is missing **")
+            print("** class name missing **")
         else:
             arg_list = arg.split()
             if arg_list[0] in globals():
@@ -101,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             if line in globals():
                 match_class = line
             else:
-                print("**class doesn't exist **")
+                print("** class doesn't exist **")
                 return
         for key in dict_objs.keys():
             a_class = key.split(".")[0]
@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
         updating attribute
         """
         if len(args) == 0:
-            print("** class name is missing **")
+            print("** class name missing **")
             return
         arg_list = args.split()
         if arg_list[0] in globals():
