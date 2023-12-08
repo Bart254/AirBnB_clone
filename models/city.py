@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-Defines city
+Module creates a City Class
 """
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """defines city class
+    """City Class
     """
     state_id = ""
     name = ""
