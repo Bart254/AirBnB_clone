@@ -28,8 +28,7 @@ class BaseModel:
     def __str__(self):
         """returns class name, id, attribute dictionary
         """
-        class_name = "[" + self.__class__.__name__ + "]"
-        return class_name + " (" + self.id + ") " + str(self.__dict__)
+        return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
 
     def save(self):
         """ updates time

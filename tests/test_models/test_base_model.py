@@ -46,6 +46,7 @@ class TestBaseModel(unittest.TestCase):
         """
         obj = BaseModel()
         expected_str = f"[{obj.__class__.__name__}] ({obj.id}) {obj.__dict__}"
+        self.assertEqual(obj.__str__(), expected_str)
 
     def test_save(self):
         """ Checks the values of updated_at
@@ -60,12 +61,10 @@ class TestBaseModel(unittest.TestCase):
         """ Tests the dictionary represenation of the object
         """
         obj = BaseModel()
-        expected_dict = {
-                'id': obj.id,
-                'created_at': obj.created_at.isoformat(),
-                'updated_at': obj.updated_at.isoformat(),
-                '__class__': 'BaseModel',
-                }
+        expected_dict = obj.__dict__.copy()
+        expected_dict['created_at'] = obj.created_at.isoformat()
+        expected_dict['updated_at'] = obj.updated_at.isoformat()
+        expected_dict['__class__'] = obj.__class__.__name__
         self.assertEqual(obj.to_dict(), expected_dict)
 
 
