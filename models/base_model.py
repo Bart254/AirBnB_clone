@@ -13,12 +13,12 @@ class BaseModel:
         """ defines common attributes of objects
         """
         if len(kwargs) != 0:
-            for key, value in kwargs.items():
-                if key == "__class__":
-                    continue
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.fromisoformat(value)
-                self.__dict__.update({key: value})
+            del kwargs['__class__']
+            kwargs['created_at'] = datetime.fromisoformat(
+                    kwargs['created_at'])
+            kwargs['updated_at'] = datetime.fromisoformat(
+                    kwargs['updated_at'])
+            self.__dict__.update(kwargs)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -34,7 +34,6 @@ class BaseModel:
         """ updates time
         """
         self.updated_at = datetime.now()
-        storage.new(self)
         storage.save()
 
     def to_dict(self):

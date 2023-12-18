@@ -39,6 +39,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertIs(type(new_obj.id), str)
         self.assertIs(type(new_obj.created_at), datetime)
         self.assertIs(type(new_obj.updated_at), datetime)
+        self.assertEqual(new_obj.__str__(), obj.__str__())
+        self.assertEqual(new_obj.to_dict(), obj.to_dict())
         self.assertIsNot(new_obj, obj)
 
     def test_string(self):
