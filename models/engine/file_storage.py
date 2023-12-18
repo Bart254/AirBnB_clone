@@ -9,31 +9,28 @@ class FileStorage:
     file_path(priv attribute): stores the path to json file
     objects(priv): a dictionary containing python objects
     """
-    __file_path = 'file.json'
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
         """ returns the dictionary of objects
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """ sets in dictionary with obj and <obj class name>.id as key
         """
         key = obj.__class__.__name__ + '.' + obj.id
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """ Serializes dictionary to the JSON file
         """
-        try:
-            with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-                temp = {}
-                for key, obj in self.all().items():
-                    temp.update({key: obj.to_dict()})
-                json.dump(temp, f)
-        except (Exception):
-            pass
+        with open(self.__file_path, "w", encoding="utf-8") as f:
+            temp = {}
+            for key, obj in self.all().items():
+                temp.update({key: obj.to_dict()})
+            json.dump(temp, f)
 
     def reload(self):
         """ Deserializes JSON file
@@ -42,15 +39,14 @@ class FileStorage:
         from models.user import User
         from models.state import State
         from models.city import City
-        from models.amenity import Amenity
 
         classes = {'BaseModel': BaseModel, 'User': User, 'State': State,
-                'City': City, 'Amenity': Amenity}
+                   'City': City}
         try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
                 temp = json.load(f)
                 for key, obj_dict in temp.items():
                     obj = classes[obj_dict['__class__']](**obj_dict)
                     self.all()[key] = obj
-        except (Exception):
+        except (FileNotFoundError):
             pass
