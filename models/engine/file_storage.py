@@ -21,14 +21,14 @@ class FileStorage:
         """ sets in dictionary with obj and <obj class name>.id as key
         """
         key = obj.__class__.__name__ + '.' + obj.id
-        self.all()[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """ Serializes dictionary to the JSON file
         """
         with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
             temp = {}
-            for key, obj in self.all().items():
+            for key, obj in FileStorage.__objects.items():
                 temp.update({key: obj.to_dict()})
             json.dump(temp, f)
 
@@ -47,6 +47,6 @@ class FileStorage:
                 temp = json.load(f)
                 for key, obj_dict in temp.items():
                     obj = classes[obj_dict['__class__']](**obj_dict)
-                    self.all()[key] = obj
+                    FileStorage.__objects[key] = obj
         except (FileNotFoundError):
             pass
