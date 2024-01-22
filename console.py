@@ -144,6 +144,21 @@ class HBNBCommand(cmd.Cmd):
                     obj.__dict__.update({attr: value})
                     obj.save()
 
+    def default(self, line):
+        """ Retrieves all instances of a class when command is passed in
+        the form <classname>.all()"""
+        if '.' in line:
+            class_name, command = line.split('.')
+            if command == 'all()':
+                self.do_all(class_name)
+            elif command == 'count()':
+                number = 0
+                for key in storage.all().keys():
+                    name = key.split('.')[0]
+                    if class_name == name:
+                        number += 1
+                print(number)
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
