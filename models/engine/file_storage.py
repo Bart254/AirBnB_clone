@@ -15,20 +15,20 @@ class FileStorage:
     def all(self):
         """ returns the dictionary of objects
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """ sets in dictionary with obj and <obj class name>.id as key
         """
         key = obj.__class__.__name__ + '.' + obj.id
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """ Serializes dictionary to the JSON file
         """
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+        with open(self.__file_path, "w", encoding="utf-8") as f:
             temp = {}
-            for key, obj in FileStorage.__objects.items():
+            for key, obj in self.__objects.items():
                 temp.update({key: obj.to_dict()})
             json.dump(temp, f)
 
@@ -39,14 +39,18 @@ class FileStorage:
         from models.user import User
         from models.state import State
         from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         classes = {'BaseModel': BaseModel, 'User': User, 'State': State,
-                   'City': City}
+                   'City': City, 'Amenity': Amenity, 'Place': Place,
+                   'Review': Review}
         try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
                 temp = json.load(f)
                 for key, obj_dict in temp.items():
                     obj = classes[obj_dict['__class__']](**obj_dict)
-                    FileStorage.__objects[key] = obj
+                    self.__objects[key] = obj
         except (FileNotFoundError):
             pass
