@@ -94,10 +94,12 @@ class HBNBCommand(cmd.Cmd):
         based or not on the class name
         """
         strings = []
+        to_print = True
         if len(args) != 0:
             class_name = args
             if class_name not in self.classes.keys():
                 print("** class doesn't exist **")
+                to_print = False
             else:
                 for key, obj in storage.all().items():
                     obj_class = key.split('.')[0]
@@ -106,7 +108,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             for obj in storage.all().values():
                 strings.append(obj.__str__())
-        print(strings)
+        if to_print:
+            print(strings)
 
     def do_update(self, args):
         """ Updates an instance based on class name and id by adding or
